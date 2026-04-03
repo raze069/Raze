@@ -9,7 +9,7 @@ import { Play, MonitorPlay, PenTool, Mail, ArrowRight, ExternalLink, X, ChevronL
 import CustomCursor from './components/CustomCursor';
 import CustomYouTubeEmbed from './components/CustomYouTubeEmbed';
 import MagneticButton from './components/MagneticButton';
-import ContactForm from './components/ContactForm';
+import ContactButtons from './components/ContactButtons';
 import { PROJECTS, Project } from './data';
 
 export default function App() {
@@ -43,7 +43,7 @@ export default function App() {
       />
 
       {/* Liquid Background */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
         <div className="liquid-blob blob-1"></div>
         <div className="liquid-blob blob-2"></div>
         <div className="liquid-blob blob-3"></div>
@@ -85,7 +85,7 @@ export default function App() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 0.3 }}
                 transition={{ delay: 1.2 }}
-                className="text-[10px] md:text-xs uppercase tracking-[0.5em] text-white font-medium flex items-center gap-3"
+                className="text-[8px] md:text-[10px] uppercase tracking-[0.5em] text-white font-medium flex items-center gap-3"
               >
                 <div className="w-1 h-1 rounded-full bg-emerald-500"></div>
                 AVAILABILITY: OPEN
@@ -94,7 +94,7 @@ export default function App() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 0.3 }}
                 transition={{ delay: 1.3 }}
-                className="text-[10px] md:text-xs uppercase tracking-[0.5em] text-white font-medium"
+                className="text-[8px] md:text-[10px] uppercase tracking-[0.5em] text-white font-medium"
               >
                 @RAZEFOREAL
               </motion.div>
@@ -237,55 +237,28 @@ export default function App() {
               whileInView={{ opacity: 1, scale: 1, y: 0 }}
               viewport={{ once: false, amount: 0.2 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
-              className="relative md:h-[450px] flex items-center justify-center w-full"
+              className="relative h-[280px] sm:h-[320px] md:h-[450px] flex items-center justify-center w-full"
             >
-              {/* Navigation Arrows (Desktop Only) */}
+              {/* Navigation Arrows */}
               <MagneticButton 
                 onClick={() => setActiveShowreel((prev) => (prev - 1 + 3) % 3)}
-                className="hidden md:flex absolute left-8 top-1/2 -translate-y-[calc(50%+4rem)] z-30 p-4 rounded-full bg-black/20 backdrop-blur-md border border-white/10 hover:bg-white/10 transition-colors group"
+                className="absolute left-0 md:left-8 top-1/2 -translate-y-[calc(50%+2rem)] md:-translate-y-[calc(50%+4rem)] z-30 p-2 md:p-4 rounded-full bg-black/40 md:bg-black/20 backdrop-blur-md border border-white/10 hover:bg-white/10 transition-colors group"
               >
-                <ChevronLeft className="w-6 h-6 text-white/80 group-hover:text-white transition-colors" />
+                <ChevronLeft className="w-4 h-4 md:w-6 md:h-6 text-white/80 group-hover:text-white transition-colors" />
               </MagneticButton>
               
               <MagneticButton 
                 onClick={() => setActiveShowreel((prev) => (prev + 1) % 3)}
-                className="hidden md:flex absolute right-8 top-1/2 -translate-y-[calc(50%+4rem)] z-30 p-4 rounded-full bg-black/20 backdrop-blur-md border border-white/10 hover:bg-white/10 transition-colors group"
+                className="absolute right-0 md:right-8 top-1/2 -translate-y-[calc(50%+2rem)] md:-translate-y-[calc(50%+4rem)] z-30 p-2 md:p-4 rounded-full bg-black/40 md:bg-black/20 backdrop-blur-md border border-white/10 hover:bg-white/10 transition-colors group"
               >
-                <ChevronRight className="w-6 h-6 text-white/80 group-hover:text-white transition-colors" />
+                <ChevronRight className="w-4 h-4 md:w-6 md:h-6 text-white/80 group-hover:text-white transition-colors" />
               </MagneticButton>
 
-              {/* Mobile Swipeable Carousel */}
-              <div className="flex md:hidden w-[100vw] relative left-1/2 -translate-x-1/2 overflow-x-auto snap-x snap-mandatory gap-4 pb-8 px-4 scrollbar-hide">
+              <div className="relative w-full h-full flex items-center justify-center perspective-1000">
                 {[
-                  { id: "iMr7fRWRWLU", title: "Cinematic Showreel" },
-                  { id: "5H2B1owjTg4", title: "Creative Editorial" },
-                  { id: "UskDs1iT_Ro", title: "Sound Design & Mix" },
-                ].map((video, i) => (
-                  <div key={i} className="min-w-[85vw] snap-center shrink-0 flex flex-col">
-                    <div className="relative aspect-video rounded-2xl overflow-hidden shadow-2xl ring-1 ring-white/20">
-                      <CustomYouTubeEmbed
-                        videoId={video.id}
-                        title={video.title}
-                        className="w-full h-full"
-                      />
-                    </div>
-                    <div className="mt-6 text-left px-2">
-                      <div className="inline-flex items-center gap-3 mb-3">
-                        <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse"></span>
-                        <p className="text-[10px] uppercase tracking-[0.3em] text-white/60">Showreel 0{i + 1}</p>
-                      </div>
-                      <h3 className="font-serif text-2xl text-white tracking-tight">{video.title}</h3>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              {/* 3D Perspective Carousel (Desktop Only) */}
-              <div className="hidden md:flex relative w-full h-full items-center justify-center perspective-1000">
-                {[
-                  { id: "iMr7fRWRWLU", title: "Cinematic Showreel" },
-                  { id: "5H2B1owjTg4", title: "Creative Editorial" },
-                  { id: "UskDs1iT_Ro", title: "Sound Design & Mix" },
+                  { id: "do78TF5cJl8", title: "Personal Brand Showreel" },
+                  { id: "5H2B1owjTg4", title: "Cinematic Showreel" },
+                  { id: "iMr7fRWRWLU", title: "Creative Showreel" },
                 ].map((video, i) => {
                   const isActive = activeShowreel === i;
                   const isLeft = (activeShowreel - 1 + 3) % 3 === i;
@@ -316,14 +289,15 @@ export default function App() {
                         damping: 25,
                         mass: 1
                       }}
-                      className="absolute w-[65%] max-w-[800px] cursor-pointer"
+                      className="absolute w-[85%] md:w-[65%] max-w-[800px] cursor-pointer"
                       onClick={() => setActiveShowreel(i)}
                     >
-                      <div className={`relative aspect-video rounded-[2rem] overflow-hidden shadow-2xl transition-all duration-700 ${isActive ? 'ring-1 ring-white/20 shadow-[0_0_80px_rgba(255,255,255,0.1)]' : 'ring-1 ring-white/5 pointer-events-none'}`}>
+                      <div className={`relative aspect-video rounded-2xl md:rounded-[2rem] overflow-hidden shadow-2xl transition-all duration-700 ${isActive ? 'ring-1 ring-white/20 shadow-[0_0_80px_rgba(255,255,255,0.1)]' : 'ring-1 ring-white/5 pointer-events-none'}`}>
                         <CustomYouTubeEmbed
                           videoId={video.id}
                           title={video.title}
                           className="w-full h-full"
+                          isActive={isActive}
                         />
                         {!isActive && <div className="absolute inset-0 bg-black/50 z-10 pointer-events-none"></div>}
                       </div>
@@ -339,16 +313,16 @@ export default function App() {
                           delay: isActive ? 0.15 : 0,
                           ease: "easeOut"
                         }}
-                        className="mt-8 flex justify-between items-end pointer-events-none px-2"
+                        className="mt-6 md:mt-8 flex justify-between items-end pointer-events-none px-2"
                       >
                         <div className="text-left">
                           <div className="inline-flex items-center gap-3 mb-3">
                             <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse"></span>
-                            <p className="text-xs uppercase tracking-[0.3em] text-white/60">Now Playing</p>
+                            <p className="text-[10px] md:text-xs uppercase tracking-[0.3em] text-white/60">Now Playing</p>
                           </div>
-                          <h3 className="font-serif text-4xl text-white tracking-tight">{video.title}</h3>
+                          <h3 className="font-serif text-2xl md:text-4xl text-white tracking-tight">{video.title}</h3>
                         </div>
-                        <div className="text-right">
+                        <div className="text-right hidden md:block">
                           <p className="text-5xl font-light text-white/10 font-mono">0{i + 1}</p>
                         </div>
                       </motion.div>
@@ -530,7 +504,7 @@ export default function App() {
                 Currently available for freelance projects and collaborations worldwide.
               </p>
               
-              <ContactForm />
+              <ContactButtons />
             </motion.div>
           </div>
         </section>

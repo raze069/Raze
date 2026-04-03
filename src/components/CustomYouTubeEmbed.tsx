@@ -1,14 +1,21 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Play } from 'lucide-react';
 
 interface CustomYouTubeEmbedProps {
   videoId: string;
   title?: string;
   className?: string;
+  isActive?: boolean;
 }
 
-export default function CustomYouTubeEmbed({ videoId, title = "YouTube video", className = "" }: CustomYouTubeEmbedProps) {
+export default function CustomYouTubeEmbed({ videoId, title = "YouTube video", className = "", isActive = true }: CustomYouTubeEmbedProps) {
   const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    if (!isActive) {
+      setIsLoaded(false);
+    }
+  }, [isActive]);
 
   return (
     <div 
