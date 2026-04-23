@@ -9,6 +9,7 @@ interface MagneticButtonProps {
 
 export default function MagneticButton({ children, className = "", onClick }: MagneticButtonProps) {
   const ref = useRef<HTMLDivElement>(null);
+  const bounds = useRef({ width: 0, height: 0, left: 0, top: 0 });
   
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -17,10 +18,19 @@ export default function MagneticButton({ children, className = "", onClick }: Ma
   const xSpring = useSpring(x, springConfig);
   const ySpring = useSpring(y, springConfig);
 
+  const handleMouseEnter = () => {
+    if (ref.current) {
+      bounds.current = ref.current.getBoundingClientRect();
+    }
+  };
+
   const handleMouse = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!ref.current) return;
     const { clientX, clientY } = e;
-    const { height, width, left, top } = ref.current.getBoundingClientRect();
+    const { height, width, left, top } = bounds.current;
+    
+    // Prevent calculation before bounds are set
+    if (width === 0) return;
+    
     const middleX = clientX - (left + width / 2);
     const middleY = clientY - (top + height / 2);
     x.set(middleX * 0.2);
@@ -35,6 +45,7 @@ export default function MagneticButton({ children, className = "", onClick }: Ma
   return (
     <motion.div
       ref={ref}
+      onMouseEnter={handleMouseEnter}
       onMouseMove={handleMouse}
       onMouseLeave={reset}
       onTouchEnd={reset}

@@ -24,11 +24,11 @@ export default function CustomCursor() {
       setIsVisible(prev => prev !== shouldBeVisible ? shouldBeVisible : prev);
 
       const isPointerElement = 
-        window.getComputedStyle(target).cursor === 'pointer' ||
         target.tagName === 'A' ||
         target.tagName === 'BUTTON' ||
         target.closest('a') !== null ||
         target.closest('button') !== null ||
+        target.closest('.cursor-pointer') !== null ||
         target.getAttribute('role') === 'button';
 
       setIsPointer(prev => prev !== isPointerElement ? isPointerElement : prev);

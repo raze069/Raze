@@ -220,3 +220,8 @@ body {
 .perspective-1000 {
   perspective: 1000px;
 }
+
+/* Optimization Utilities */
+.render-optimized {
+  contain: paint layout;
+}

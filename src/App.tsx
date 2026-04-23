@@ -47,7 +47,7 @@ export default function App() {
         <div className="liquid-blob blob-1"></div>
         <div className="liquid-blob blob-2"></div>
         <div className="liquid-blob blob-3"></div>
-        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03] transform-gpu translate-z-0 contain-paint"></div>
+        <div className="absolute inset-0 opacity-[0.04] mix-blend-overlay pointer-events-none transform-gpu" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.5' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }}></div>
       </div>
       
       <CustomCursor />
@@ -219,7 +219,7 @@ export default function App() {
         </section>
 
         {/* Showreel Section - Carousel Layout */}
-        <section id="showreel" className="py-16 md:py-20 px-4 md:px-16 lg:px-24 relative z-20 overflow-hidden">
+        <section id="showreel" className="py-16 md:py-20 px-4 md:px-16 lg:px-24 relative z-20 overflow-hidden render-optimized">
           <div className="max-w-6xl mx-auto">
             <motion.div 
               initial={{ opacity: 0, y: 50 }}
@@ -339,71 +339,8 @@ export default function App() {
           </div>
         </section>
 
-        {/* Expertise Section */}
-        <section id="expertise" className="py-20 md:py-32 px-4 md:px-16 lg:px-24">
-          <div className="max-w-6xl mx-auto">
-            <motion.div 
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: false, amount: 0.3 }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
-              className="flex flex-col md:flex-row gap-6 md:gap-12 items-start md:items-end mb-16 md:mb-24"
-            >
-              <h2 className="font-serif text-5xl md:text-[75px] italic no-underline leading-[1] md:leading-[25px] tracking-tighter flex-1">
-                <span className="block text-white/40 italic text-xl md:text-3xl mb-2 md:mb-4 tracking-normal">The</span>
-                Discipline
-              </h2>
-              <p className="max-w-md text-white/60 text-[11px] uppercase tracking-[0.3em] leading-relaxed md:-mb-2.5 pb-0 mb-4">
-                A specialized approach that bridges the gap between high-retention viral content and high-end cinematic storytelling.
-              </p>
-            </motion.div>
-
-            <div className="grid md:grid-cols-2 gap-6">
-              <motion.div 
-                initial={{ opacity: 0, y: 60 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: false, amount: 0.3 }}
-                transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-                whileHover={{ y: -5 }}
-                className="glass-panel rounded-[2rem] md:rounded-3xl p-6 md:p-10 group"
-              >
-                <MonitorPlay className="w-10 h-10 text-white/40 mb-8 group-hover:text-white transition-colors" />
-                <h3 className="font-serif mb-4 text-2xl md:text-[32px] italic">Video Editing</h3>
-                <p className="text-white/70 leading-relaxed mb-8 font-sans text-sm md:text-[15px]">
-                  Engineered for the modern feed. From high-retention, fast-paced viral hooks that stop the scroll to cinematic narratives that leave a lasting legacy.
-                </p>
-                <ul className="space-y-3 text-sm text-white/70">
-                  <li className="flex items-center gap-3"><div className="w-1 h-1 rounded-full bg-white/40"></div> High-Retention Hook Strategy</li>
-                  <li className="flex items-center gap-3"><div className="w-1 h-1 rounded-full bg-white/40"></div> Viral Pacing & Sound Design</li>
-                  <li className="flex items-center gap-3"><div className="w-1 h-1 rounded-full bg-white/40"></div> Cinematic Color Grading</li>
-                </ul>
-              </motion.div>
-
-              <motion.div 
-                initial={{ opacity: 0, y: 60 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: false, amount: 0.3 }}
-                transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-                whileHover={{ y: -5 }}
-                className="glass-panel rounded-[2rem] md:rounded-3xl p-6 md:p-10 group"
-              >
-                <PenTool className="w-10 h-10 text-white/40 mb-8 group-hover:text-white transition-colors" />
-                <h3 className="font-serif mb-4 text-2xl md:text-[32px] italic">Graphic Design</h3>
-                <p className="text-white/70 leading-relaxed mb-8 text-sm md:text-[15px]">
-                  Creating striking visual identities, key art, and digital assets that demand attention and communicate complex ideas instantly.
-                </p>
-                <ul className="space-y-3 text-sm text-white/70">
-                  <li className="flex items-center gap-3"><div className="w-1 h-1 rounded-full bg-white/40"></div> Brand Identity & Typography</li>
-                  <li className="flex items-center gap-3"><div className="w-1 h-1 rounded-full bg-white/40"></div> Key Art & Poster Design</li>
-                  <li className="flex items-center gap-3"><div className="w-1 h-1 rounded-full bg-white/40"></div> UI/UX Visuals</li>
-                </ul>
-              </motion.div>
-            </div>
-          </div>
-        </section>
-
         {/* Selected Work Section */}
-        <section id="work" className="py-20 md:py-32 px-4 md:px-16 lg:px-24">
+        <section id="work" className="py-20 md:py-32 px-4 md:px-16 lg:px-24 render-optimized">
           <div className="max-w-6xl mx-auto">
             <motion.div 
               initial={{ opacity: 0, y: 50 }}
@@ -488,8 +425,71 @@ export default function App() {
           </div>
         </section>
 
+        {/* Expertise Section */}
+        <section id="expertise" className="py-20 md:py-32 px-4 md:px-16 lg:px-24 render-optimized">
+          <div className="max-w-6xl mx-auto">
+            <motion.div 
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false, amount: 0.3 }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              className="flex flex-col md:flex-row gap-6 md:gap-12 items-start md:items-end mb-16 md:mb-24"
+            >
+              <h2 className="font-serif text-5xl md:text-[75px] italic no-underline leading-[1] md:leading-[25px] tracking-tighter flex-1">
+                <span className="block text-white/40 italic text-xl md:text-3xl mb-2 md:mb-4 tracking-normal">The</span>
+                Discipline
+              </h2>
+              <p className="max-w-md text-white/60 text-[11px] uppercase tracking-[0.3em] leading-relaxed md:-mb-2.5 pb-0 mb-4">
+                A specialized approach that bridges the gap between high-retention viral content and high-end cinematic storytelling.
+              </p>
+            </motion.div>
+
+            <div className="grid md:grid-cols-2 gap-6">
+              <motion.div 
+                initial={{ opacity: 0, y: 60 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: false, amount: 0.3 }}
+                transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
+                whileHover={{ y: -5 }}
+                className="glass-panel rounded-[2rem] md:rounded-3xl p-6 md:p-10 group"
+              >
+                <MonitorPlay className="w-10 h-10 text-white/40 mb-8 group-hover:text-white transition-colors" />
+                <h3 className="font-serif mb-4 text-2xl md:text-[32px] italic">Video Editing</h3>
+                <p className="text-white/70 leading-relaxed mb-8 font-sans text-sm md:text-[15px]">
+                  Engineered for the modern feed. From high-retention, fast-paced viral hooks that stop the scroll to cinematic narratives that leave a lasting legacy.
+                </p>
+                <ul className="space-y-3 text-sm text-white/70">
+                  <li className="flex items-center gap-3"><div className="w-1 h-1 rounded-full bg-white/40"></div> High-Retention Hook Strategy</li>
+                  <li className="flex items-center gap-3"><div className="w-1 h-1 rounded-full bg-white/40"></div> Viral Pacing & Sound Design</li>
+                  <li className="flex items-center gap-3"><div className="w-1 h-1 rounded-full bg-white/40"></div> Cinematic Color Grading</li>
+                </ul>
+              </motion.div>
+
+              <motion.div 
+                initial={{ opacity: 0, y: 60 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: false, amount: 0.3 }}
+                transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+                whileHover={{ y: -5 }}
+                className="glass-panel rounded-[2rem] md:rounded-3xl p-6 md:p-10 group"
+              >
+                <PenTool className="w-10 h-10 text-white/40 mb-8 group-hover:text-white transition-colors" />
+                <h3 className="font-serif mb-4 text-2xl md:text-[32px] italic">Graphic Design</h3>
+                <p className="text-white/70 leading-relaxed mb-8 text-sm md:text-[15px]">
+                  Creating striking visual identities, key art, and digital assets that demand attention and communicate complex ideas instantly.
+                </p>
+                <ul className="space-y-3 text-sm text-white/70">
+                  <li className="flex items-center gap-3"><div className="w-1 h-1 rounded-full bg-white/40"></div> Brand Identity & Typography</li>
+                  <li className="flex items-center gap-3"><div className="w-1 h-1 rounded-full bg-white/40"></div> Key Art & Poster Design</li>
+                  <li className="flex items-center gap-3"><div className="w-1 h-1 rounded-full bg-white/40"></div> UI/UX Visuals</li>
+                </ul>
+              </motion.div>
+            </div>
+          </div>
+        </section>
+
         {/* Contact Section */}
-        <section id="contact" className="py-20 md:py-32 px-4 md:px-16 lg:px-24 relative">
+        <section id="contact" className="py-20 md:py-32 px-4 md:px-16 lg:px-24 relative render-optimized">
           <div className="max-w-4xl mx-auto text-center">
             <motion.div 
               initial={{ opacity: 0, scale: 0.85, y: 40 }}
