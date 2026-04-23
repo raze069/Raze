@@ -43,11 +43,11 @@ export default function App() {
       />
 
       {/* Liquid Background */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
+      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0 transform-gpu translate-z-0">
         <div className="liquid-blob blob-1"></div>
         <div className="liquid-blob blob-2"></div>
         <div className="liquid-blob blob-3"></div>
-        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03]"></div>
+        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03] transform-gpu translate-z-0 contain-paint"></div>
       </div>
       
       <CustomCursor />
@@ -183,12 +183,14 @@ export default function App() {
               <div className="relative w-full max-w-[450px] lg:max-w-none h-[350px] md:h-[450px] lg:h-[550px] rounded-3xl md:rounded-[2rem] overflow-hidden group">
                 <div className="absolute inset-0 bg-gradient-to-tr from-black/60 via-transparent to-transparent z-10"></div>
                 <div className="absolute inset-0 border border-white/10 rounded-3xl md:rounded-[2rem] z-20 group-hover:border-white/20 transition-colors duration-500"></div>
-                <motion.img 
+                <img 
                   src="https://i.ibb.co/zTk2rWkK/9-2.png" 
                   alt="Portrait"
-                  className="w-full h-full object-cover filter grayscale hover:grayscale-0 transition-all duration-700 scale-105 group-hover:scale-100"
+                  className="w-full h-full object-cover filter grayscale hover:grayscale-0 transition-all duration-700 scale-105 group-hover:scale-100 transform-gpu"
                   referrerPolicy="no-referrer"
                   fetchPriority="high"
+                  loading="eager"
+                  decoding="async"
                 />
                 
                 {/* Name Label */}
@@ -441,12 +443,13 @@ export default function App() {
                       alt={project.title}
                       referrerPolicy="no-referrer"
                       loading="lazy"
+                      decoding="async"
                       initial={{ scale: 1.3 }}
                       whileInView={{ scale: 1 }}
                       whileHover={{ scale: 1.05 }}
                       viewport={{ once: false, amount: 0.2 }}
                       transition={{ duration: 0.8, ease: "easeOut" }}
-                      className="w-full h-full object-cover opacity-70 group-hover:opacity-40 transition-all duration-700"
+                      className="w-full h-full object-cover opacity-70 group-hover:opacity-40 transition-opacity duration-700 transform-gpu"
                     />
                   </div>
 
