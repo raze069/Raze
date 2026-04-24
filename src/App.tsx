@@ -6,6 +6,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence, useScroll, useSpring } from 'motion/react';
 import { Play, MonitorPlay, PenTool, Mail, ArrowRight, ExternalLink, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import CustomCursor from './components/CustomCursor';
 import CustomYouTubeEmbed from './components/CustomYouTubeEmbed';
 import MagneticButton from './components/MagneticButton';
@@ -574,6 +575,7 @@ export default function App() {
           </motion.div>
         )}
       </AnimatePresence>
+      <SpeedInsights />
     </div>
   );
 }
