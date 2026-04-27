@@ -131,7 +131,7 @@ export default function App() {
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: isMobile }}
+              viewport={{ once: true }}
               transition={{ duration: 0.8, ease: "easeOut" }}
               className="lg:col-span-7 flex flex-col items-start text-left space-y-8 order-2 lg:order-1"
             >
@@ -139,7 +139,7 @@ export default function App() {
                 <motion.div 
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: isMobile, margin: "-50px" }}
+                  viewport={{ once: true, margin: "-50px" }}
                   transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
                   className="flex items-center gap-4"
                 >
@@ -152,7 +152,7 @@ export default function App() {
                 <motion.h1 
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: isMobile, margin: "-50px" }}
+                  viewport={{ once: true, margin: "-50px" }}
                   transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
                   className="font-serif text-[50px] md:text-7xl lg:text-8xl leading-[0.85] tracking-tighter text-white"
                 >
@@ -165,7 +165,7 @@ export default function App() {
               <motion.p 
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: isMobile, margin: "-50px" }}
+                viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
                 className="max-w-md text-white/60 text-[11px] uppercase tracking-[0.3em] leading-relaxed"
               >
@@ -175,7 +175,7 @@ export default function App() {
               <motion.div 
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: isMobile, margin: "-50px" }}
+                viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
                 className="pt-4 flex flex-wrap items-center gap-4 md:gap-6"
               >
@@ -196,7 +196,7 @@ export default function App() {
             <motion.div
               initial={{ opacity: 0, scale: 0.9, rotate: 2 }}
               whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
-              viewport={{ once: isMobile }}
+              viewport={{ once: true }}
               transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
               className="lg:col-span-5 relative order-1 lg:order-2 flex justify-center lg:justify-end lg:-mt-8"
             >
@@ -206,7 +206,7 @@ export default function App() {
                 <img 
                   src="https://i.imgur.com/iKnxbdC.jpeg" 
                   alt="Portrait"
-                  className="w-full h-full object-cover filter grayscale hover:grayscale-0 transition-all duration-700 scale-105 group-hover:scale-100 transform-gpu"
+                  className="w-full h-full object-cover filter grayscale hover:grayscale-0 transition-all duration-700 scale-105 group-hover:scale-100 transform-gpu will-change-[filter,transform]"
                   referrerPolicy="no-referrer"
                   fetchPriority="high"
                   loading="eager"
@@ -246,7 +246,7 @@ export default function App() {
             <motion.div 
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: isMobile, amount: 0.3 }}
+              viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.6, ease: "easeOut" }}
               className="text-center mb-16 md:mb-24"
             >
@@ -259,7 +259,7 @@ export default function App() {
             <motion.div 
               initial={{ opacity: 0, scale: 0.95, y: 40 }}
               whileInView={{ opacity: 1, scale: 1, y: 0 }}
-              viewport={{ once: isMobile, amount: 0.2 }}
+              viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
               className="relative h-[480px] sm:h-[550px] md:h-[600px] flex items-center justify-center w-full mt-4 md:mt-0"
             >
@@ -368,7 +368,7 @@ export default function App() {
             <motion.div 
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: isMobile, amount: 0.3 }}
+              viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.6, ease: "easeOut" }}
               className="flex flex-col md:flex-row md:items-end justify-between mb-16 md:mb-24 gap-6 md:gap-8"
             >
@@ -428,21 +428,20 @@ export default function App() {
               </AnimatePresence>
             </motion.div>
 
-            <motion.div layout className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12">
-              <AnimatePresence mode="popLayout">
+            <motion.div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12">
+              <AnimatePresence>
                 {filteredProjects.map((project, i) => (
                   <motion.div 
-                    layout
                     key={project.title}
                   onClick={() => setSelectedProject(project)}
                   onKeyDown={(e) => e.key === 'Enter' && setSelectedProject(project)}
                   role="button"
                   tabIndex={0}
                   aria-label={`View details for ${project.title}`}
-                  initial={{ opacity: 0, y: 80 }}
+                  initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 80 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: isMobile, amount: 0.2 }}
-                  transition={{ duration: 0.6, delay: (i % 3) * 0.1, ease: "easeOut" }}
+                  viewport={{ once: true, amount: 0.1 }}
+                  transition={{ duration: 0.6, delay: isMobile ? 0 : (i % 3) * 0.1, ease: "easeOut" }}
                   className={`group relative ${project.colSpan} ${project.heightClass} rounded-[2rem] overflow-hidden cursor-pointer`}
                 >
                   {/* Image Container with Parallax Effect */}
@@ -453,10 +452,10 @@ export default function App() {
                       referrerPolicy="no-referrer"
                       loading="lazy"
                       decoding="async"
-                      initial={{ scale: 1.3 }}
+                      initial={isMobile ? { scale: 1 } : { scale: 1.3 }}
                       whileInView={{ scale: 1 }}
                       whileHover={{ scale: 1.05 }}
-                      viewport={{ once: isMobile, amount: 0.2 }}
+                      viewport={{ once: true, amount: 0.1 }}
                       transition={{ duration: 0.8, ease: "easeOut" }}
                       className="w-full h-full object-cover opacity-70 group-hover:opacity-40 transition-opacity duration-700 transform-gpu"
                     />
@@ -471,9 +470,9 @@ export default function App() {
                   <div className={`absolute inset-0 flex flex-col justify-end ${project.isLarge ? 'p-8 md:p-12' : 'p-6 md:p-8'}`}>
                     <div className="relative z-10">
                       <motion.div 
-                        initial={{ opacity: 0, x: -40 }}
+                        initial={isMobile ? { opacity: 1, x: 0 } : { opacity: 0, x: -40 }}
                         whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: isMobile, margin: "-50px" }}
+                        viewport={{ once: true, margin: "0px" }}
                         transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" }}
                         className="flex items-center gap-4 mb-4"
                       >
@@ -504,7 +503,7 @@ export default function App() {
             <motion.div 
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: isMobile, amount: 0.3 }}
+              viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.6, ease: "easeOut" }}
               className="flex flex-col md:flex-row gap-6 md:gap-12 items-start md:items-end mb-16 md:mb-24"
             >
@@ -521,7 +520,7 @@ export default function App() {
               <motion.div 
                 initial={{ opacity: 0, y: 60 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: isMobile, amount: 0.3 }}
+                viewport={{ once: true, amount: 0.3 }}
                 transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
                 whileHover={{ y: -5 }}
                 className="glass-panel rounded-[2rem] md:rounded-3xl p-6 md:p-10 group"
@@ -541,7 +540,7 @@ export default function App() {
               <motion.div 
                 initial={{ opacity: 0, y: 60 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: isMobile, amount: 0.3 }}
+                viewport={{ once: true, amount: 0.3 }}
                 transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
                 whileHover={{ y: -5 }}
                 className="glass-panel rounded-[2rem] md:rounded-3xl p-6 md:p-10 group"
@@ -567,7 +566,7 @@ export default function App() {
             <motion.div 
               initial={{ opacity: 0, scale: 0.85, y: 40 }}
               whileInView={{ opacity: 1, scale: 1, y: 0 }}
-              viewport={{ once: isMobile, amount: 0.3 }}
+              viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.6, ease: "easeOut" }}
               className="glass-panel rounded-[2rem] md:rounded-[3rem] p-6 md:p-16 relative overflow-hidden mx-0 md:mx-auto"
             >
