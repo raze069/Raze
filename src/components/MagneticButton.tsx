@@ -1,5 +1,6 @@
 import React, { useRef, ReactNode, useState, useEffect } from 'react';
 import { motion, useMotionValue, useSpring } from 'motion/react';
+import { playHoverSound, playClickSound } from '../hooks/useSFX';
 
 interface MagneticButtonProps {
   children: ReactNode;
@@ -24,6 +25,7 @@ export default function MagneticButton({ children, className = "", onClick }: Ma
   const ySpring = useSpring(y, springConfig);
 
   const handleMouseEnter = () => {
+    if (!isTouchDevice) playHoverSound();
     if (isTouchDevice) return;
     if (ref.current) {
       bounds.current = ref.current.getBoundingClientRect();
@@ -50,6 +52,11 @@ export default function MagneticButton({ children, className = "", onClick }: Ma
     y.set(0);
   };
 
+  const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    playClickSound();
+    if (onClick) onClick();
+  };
+
   return (
     <motion.div
       ref={ref}
@@ -59,7 +66,7 @@ export default function MagneticButton({ children, className = "", onClick }: Ma
       onTouchEnd={reset}
       style={isTouchDevice ? {} : { x: xSpring, y: ySpring }}
       className={className}
-      onClick={onClick}
+      onClick={handleClick}
     >
       {children}
     </motion.div>

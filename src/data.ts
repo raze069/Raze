@@ -17,7 +17,7 @@ export const PROJECTS: Project[] = [
     img: "https://picsum.photos/seed/cinema/1200/600", 
     videos: ["do78TF5cJl8", "RBQZLVMsCTA", "5lMX5jMYh_A", "Eojw7gUffu8", "rSV3Io3NJKg"], 
     colSpan: "md:col-span-12 lg:col-span-8", 
-    heightClass: "h-[400px] lg:h-[460px]", 
+    heightClass: "h-[300px] md:h-[400px] lg:h-[460px]", 
     isLarge: true 
   },
   { 
@@ -27,7 +27,7 @@ export const PROJECTS: Project[] = [
     img: "https://picsum.photos/seed/abstract/800/1000", 
     videos: ["31yCm2ElTwQ", "7HcGyIMSc_U", "4lSLmkplX2w", "FKV3gDkg4VE"], 
     colSpan: "md:col-span-6 lg:col-span-4", 
-    heightClass: "h-[400px] lg:h-[460px]" 
+    heightClass: "h-[300px] md:h-[400px] lg:h-[460px]" 
   },
   { 
     title: "Virality", 
@@ -36,7 +36,7 @@ export const PROJECTS: Project[] = [
     img: "https://picsum.photos/seed/speed/800/1000", 
     videos: ["d1w44vVpBPc", "zvxposAXprg", "VGkcB0L0t-I", "ra_0t6kvsY8", "sf-9EW_T3bk"], 
     colSpan: "md:col-span-6 lg:col-span-4", 
-    heightClass: "h-[400px] lg:h-[450px]" 
+    heightClass: "h-[300px] md:h-[400px] lg:h-[450px]" 
   },
   { 
     title: "Agency", 
@@ -45,7 +45,7 @@ export const PROJECTS: Project[] = [
     img: "https://picsum.photos/seed/neon/800/1000", 
     videos: ["hOrP39DEvfc", "6_k6loJJrNc", "bMMBe_RmCME", "jv5yVRMSgu0", "su5oQX3slnU"], 
     colSpan: "md:col-span-6 lg:col-span-4", 
-    heightClass: "h-[400px] lg:h-[450px]" 
+    heightClass: "h-[300px] md:h-[400px] lg:h-[450px]" 
   },
   { 
     title: "Creative", 
@@ -54,6 +54,6 @@ export const PROJECTS: Project[] = [
     img: "https://picsum.photos/seed/dark/800/1000", 
     videos: ["UskDs1iT_Ro", "iMr7fRWRWLU"], 
     colSpan: "md:col-span-6 lg:col-span-4", 
-    heightClass: "h-[400px] lg:h-[450px]" 
+    heightClass: "h-[300px] md:h-[400px] lg:h-[450px]" 
   },
 ];

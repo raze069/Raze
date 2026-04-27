@@ -3,19 +3,31 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence, useScroll, useSpring } from 'motion/react';
-import { Play, MonitorPlay, PenTool, Mail, ArrowRight, ExternalLink, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Play, MonitorPlay, PenTool, Mail, ArrowRight, ExternalLink, X, ChevronLeft, ChevronRight, Filter } from 'lucide-react';
 import CustomCursor from './components/CustomCursor';
 import CustomYouTubeEmbed from './components/CustomYouTubeEmbed';
 import MagneticButton from './components/MagneticButton';
 import ContactButtons from './components/ContactButtons';
+import Marquee from './components/Marquee';
 import { PROJECTS, Project } from './data';
 
 export default function App() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [activeShowreel, setActiveShowreel] = useState(0);
   const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' ? window.innerWidth < 768 : false);
+  const [activeCategory, setActiveCategory] = useState('All');
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+
+  const categories = useMemo(() => {
+    return ['All', ...Array.from(new Set(PROJECTS.map(p => p.category)))];
+  }, []);
+
+  const filteredProjects = useMemo(() => {
+    if (activeCategory === 'All') return PROJECTS;
+    return PROJECTS.filter(p => p.category === activeCategory);
+  }, [activeCategory]);
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
@@ -226,6 +238,8 @@ export default function App() {
           </div>
         </section>
 
+        <Marquee />
+
         {/* Showreel Section - Carousel Layout */}
         <section id="showreel" className="py-16 md:py-20 px-4 md:px-16 lg:px-24 relative z-20 overflow-hidden render-optimized">
           <div className="max-w-6xl mx-auto">
@@ -367,10 +381,59 @@ export default function App() {
               </p>
             </motion.div>
 
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12">
-              {PROJECTS.map((project, i) => (
-                <motion.div 
-                  key={i}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="mb-12 md:mb-16"
+            >
+              {/* Mobile Filter Toggle */}
+              <div className="md:hidden mb-4">
+                <button 
+                  onClick={() => setIsFilterOpen(!isFilterOpen)}
+                  className="flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 text-xs uppercase tracking-widest text-white/80 hover:text-white"
+                >
+                  <Filter size={14} />
+                  {activeCategory === 'All' ? 'Filter Works' : `Filter: ${activeCategory}`}
+                </button>
+              </div>
+
+              {/* Categories */}
+              <AnimatePresence>
+                {(!isMobile || isFilterOpen) && (
+                  <motion.div 
+                    initial={isMobile ? { opacity: 0, height: 0, margin: 0 } : false}
+                    animate={isMobile ? { opacity: 1, height: 'auto', marginTop: 16 } : false}
+                    exit={isMobile ? { opacity: 0, height: 0, margin: 0 } : false}
+                    className="flex flex-wrap gap-2 md:gap-4 overflow-hidden"
+                  >
+                    {categories.map((category) => (
+                      <button
+                        key={category}
+                        onClick={() => {
+                          setActiveCategory(category);
+                          if (isMobile) setIsFilterOpen(false);
+                        }}
+                        className={`px-4 py-2 rounded-full text-xs uppercase tracking-widest transition-all whitespace-nowrap ${
+                          activeCategory === category 
+                            ? 'bg-white text-black' 
+                            : 'bg-white/5 text-white/60 hover:bg-white/10 hover:text-white border border-white/10 hover:border-white/20'
+                        }`}
+                      >
+                        {category}
+                      </button>
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
+
+            <motion.div layout className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12">
+              <AnimatePresence mode="popLayout">
+                {filteredProjects.map((project, i) => (
+                  <motion.div 
+                    layout
+                    key={project.title}
                   onClick={() => setSelectedProject(project)}
                   onKeyDown={(e) => e.key === 'Enter' && setSelectedProject(project)}
                   role="button"
@@ -380,7 +443,7 @@ export default function App() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: isMobile, amount: 0.2 }}
                   transition={{ duration: 0.6, delay: (i % 3) * 0.1, ease: "easeOut" }}
-                  className={`group relative ${project.colSpan} ${project.heightClass.replace('h-[400px]', 'h-[350px]').replace('lg:h-[460px]', 'lg:h-[400px]').replace('lg:h-[450px]', 'lg:h-[400px]')} rounded-[2rem] overflow-hidden cursor-pointer`}
+                  className={`group relative ${project.colSpan} ${project.heightClass} rounded-[2rem] overflow-hidden cursor-pointer`}
                 >
                   {/* Image Container with Parallax Effect */}
                   <div className="absolute inset-0 overflow-hidden">
@@ -430,7 +493,8 @@ export default function App() {
                   </div>
                 </motion.div>
               ))}
-            </div>
+              </AnimatePresence>
+            </motion.div>
           </div>
         </section>
 
@@ -522,9 +586,9 @@ export default function App() {
         </section>
 
         {/* Footer */}
-        <footer className="py-8 md:py-12 px-4 md:px-16 lg:px-24 border-t border-white/10 text-center flex flex-col md:flex-row justify-between items-center max-w-6xl mx-auto text-[8px] md:text-xs uppercase tracking-[0.2em] text-white/60 gap-4 md:gap-0">
+        <footer className="py-8 md:py-12 px-4 md:px-16 lg:px-24 border-t border-white/10 text-center flex flex-col md:flex-row justify-between items-center max-w-6xl mx-auto text-[10px] sm:text-[11px] md:text-xs uppercase tracking-[0.2em] text-white/60 gap-4 md:gap-0">
           <p>&copy; {new Date().getFullYear()} Raze. All rights reserved.</p>
-          <div className="flex gap-4 md:gap-6 mt-2 md:mt-0">
+          <div className="flex flex-wrap justify-center gap-4 md:gap-6 mt-2 md:mt-0">
             <a href="https://www.instagram.com/razeforeal/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Instagram</a>
             <a href="https://drive.google.com/drive/folders/1ZXImsJ9Pfe4tVw4-ni97JndrUuJTaTTY?usp=sharing" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Drive</a>
             <a href="#" className="hover:text-white transition-colors">Behance</a>
