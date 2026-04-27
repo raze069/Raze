@@ -2,6 +2,18 @@ import { useState, useEffect } from 'react';
 import { motion, useMotionValue, useSpring } from 'motion/react';
 
 export default function CustomCursor() {
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
+
+  useEffect(() => {
+    // Check if device is a touch device / mobile
+    const checkTouch = () => {
+      setIsTouchDevice(window.matchMedia('(pointer: coarse)').matches || window.innerWidth < 768);
+    };
+    checkTouch();
+    window.addEventListener('resize', checkTouch, { passive: true });
+    return () => window.removeEventListener('resize', checkTouch);
+  }, []);
+
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
   
@@ -13,6 +25,8 @@ export default function CustomCursor() {
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
+    if (isTouchDevice) return; // Completely bypass on mobile
+
     const handleMouseMove = (e: MouseEvent) => {
       cursorX.set(e.clientX);
       cursorY.set(e.clientY);
@@ -36,7 +50,9 @@ export default function CustomCursor() {
 
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
     return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, [cursorX, cursorY]);
+  }, [cursorX, cursorY, isTouchDevice]);
+
+  if (isTouchDevice) return null;
 
   return (
     <motion.div

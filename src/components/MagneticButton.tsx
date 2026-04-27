@@ -1,4 +1,4 @@
-import React, { useRef, ReactNode } from 'react';
+import React, { useRef, ReactNode, useState, useEffect } from 'react';
 import { motion, useMotionValue, useSpring } from 'motion/react';
 
 interface MagneticButtonProps {
@@ -10,6 +10,11 @@ interface MagneticButtonProps {
 export default function MagneticButton({ children, className = "", onClick }: MagneticButtonProps) {
   const ref = useRef<HTMLDivElement>(null);
   const bounds = useRef({ width: 0, height: 0, left: 0, top: 0 });
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
+
+  useEffect(() => {
+    setIsTouchDevice(window.matchMedia('(pointer: coarse)').matches || window.innerWidth < 768);
+  }, []);
   
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -19,12 +24,14 @@ export default function MagneticButton({ children, className = "", onClick }: Ma
   const ySpring = useSpring(y, springConfig);
 
   const handleMouseEnter = () => {
+    if (isTouchDevice) return;
     if (ref.current) {
       bounds.current = ref.current.getBoundingClientRect();
     }
   };
 
   const handleMouse = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (isTouchDevice) return;
     const { clientX, clientY } = e;
     const { height, width, left, top } = bounds.current;
     
@@ -38,6 +45,7 @@ export default function MagneticButton({ children, className = "", onClick }: Ma
   };
 
   const reset = () => {
+    if (isTouchDevice) return;
     x.set(0);
     y.set(0);
   };
@@ -49,7 +57,7 @@ export default function MagneticButton({ children, className = "", onClick }: Ma
       onMouseMove={handleMouse}
       onMouseLeave={reset}
       onTouchEnd={reset}
-      style={{ x: xSpring, y: ySpring }}
+      style={isTouchDevice ? {} : { x: xSpring, y: ySpring }}
       className={className}
       onClick={onClick}
     >

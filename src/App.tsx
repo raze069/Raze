@@ -6,7 +6,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence, useScroll, useSpring } from 'motion/react';
 import { Play, MonitorPlay, PenTool, Mail, ArrowRight, ExternalLink, X, ChevronLeft, ChevronRight } from 'lucide-react';
-import { SpeedInsights } from '@vercel/speed-insights/react';
 import CustomCursor from './components/CustomCursor';
 import CustomYouTubeEmbed from './components/CustomYouTubeEmbed';
 import MagneticButton from './components/MagneticButton';
@@ -16,6 +15,14 @@ import { PROJECTS, Project } from './data';
 export default function App() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [activeShowreel, setActiveShowreel] = useState(0);
+  const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' ? window.innerWidth < 768 : false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile(); // Check on mount
+    window.addEventListener('resize', checkMobile, { passive: true });
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
@@ -112,7 +119,7 @@ export default function App() {
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: false }}
+              viewport={{ once: isMobile }}
               transition={{ duration: 0.8, ease: "easeOut" }}
               className="lg:col-span-7 flex flex-col items-start text-left space-y-8 order-2 lg:order-1"
             >
@@ -120,7 +127,7 @@ export default function App() {
                 <motion.div 
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: false, margin: "-50px" }}
+                  viewport={{ once: isMobile, margin: "-50px" }}
                   transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
                   className="flex items-center gap-4"
                 >
@@ -133,7 +140,7 @@ export default function App() {
                 <motion.h1 
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: false, margin: "-50px" }}
+                  viewport={{ once: isMobile, margin: "-50px" }}
                   transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
                   className="font-serif text-[50px] md:text-7xl lg:text-8xl leading-[0.85] tracking-tighter text-white"
                 >
@@ -146,7 +153,7 @@ export default function App() {
               <motion.p 
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: false, margin: "-50px" }}
+                viewport={{ once: isMobile, margin: "-50px" }}
                 transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
                 className="max-w-md text-white/60 text-[11px] uppercase tracking-[0.3em] leading-relaxed"
               >
@@ -156,7 +163,7 @@ export default function App() {
               <motion.div 
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: false, margin: "-50px" }}
+                viewport={{ once: isMobile, margin: "-50px" }}
                 transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
                 className="pt-4 flex flex-wrap items-center gap-4 md:gap-6"
               >
@@ -177,7 +184,7 @@ export default function App() {
             <motion.div
               initial={{ opacity: 0, scale: 0.9, rotate: 2 }}
               whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
-              viewport={{ once: false }}
+              viewport={{ once: isMobile }}
               transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
               className="lg:col-span-5 relative order-1 lg:order-2 flex justify-center lg:justify-end lg:-mt-8"
             >
@@ -185,7 +192,7 @@ export default function App() {
                 <div className="absolute inset-0 bg-gradient-to-tr from-black/60 via-transparent to-transparent z-10"></div>
                 <div className="absolute inset-0 border border-white/10 rounded-3xl md:rounded-[2rem] z-20 group-hover:border-white/20 transition-colors duration-500"></div>
                 <img 
-                  src="https://i.ibb.co/zTk2rWkK/9-2.png" 
+                  src="/portrait.webp" 
                   alt="Portrait"
                   className="w-full h-full object-cover filter grayscale hover:grayscale-0 transition-all duration-700 scale-105 group-hover:scale-100 transform-gpu"
                   referrerPolicy="no-referrer"
@@ -225,7 +232,7 @@ export default function App() {
             <motion.div 
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: false, amount: 0.3 }}
+              viewport={{ once: isMobile, amount: 0.3 }}
               transition={{ duration: 0.6, ease: "easeOut" }}
               className="text-center mb-16 md:mb-24"
             >
@@ -238,30 +245,30 @@ export default function App() {
             <motion.div 
               initial={{ opacity: 0, scale: 0.95, y: 40 }}
               whileInView={{ opacity: 1, scale: 1, y: 0 }}
-              viewport={{ once: false, amount: 0.2 }}
+              viewport={{ once: isMobile, amount: 0.2 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
-              className="relative h-[280px] sm:h-[320px] md:h-[450px] flex items-center justify-center w-full"
+              className="relative h-[480px] sm:h-[550px] md:h-[600px] flex items-center justify-center w-full mt-4 md:mt-0"
             >
               {/* Navigation Arrows */}
               <MagneticButton 
                 onClick={() => setActiveShowreel((prev) => (prev - 1 + 3) % 3)}
-                className="absolute left-0 md:left-8 top-1/2 -translate-y-[calc(50%+2rem)] md:-translate-y-[calc(50%+4rem)] z-30 p-2 md:p-4 rounded-full bg-black/40 md:bg-black/20 backdrop-blur-md border border-white/10 hover:bg-white/10 transition-colors group"
+                className="absolute -left-2 md:left-8 top-1/2 -translate-y-[calc(50%+2.5rem)] md:-translate-y-[calc(50%+4rem)] z-30 p-2 md:p-4 rounded-full bg-black/40 md:bg-black/20 backdrop-blur-md border border-white/10 hover:bg-white/10 transition-colors group"
               >
                 <ChevronLeft className="w-4 h-4 md:w-6 md:h-6 text-white/80 group-hover:text-white transition-colors" />
               </MagneticButton>
               
               <MagneticButton 
                 onClick={() => setActiveShowreel((prev) => (prev + 1) % 3)}
-                className="absolute right-0 md:right-8 top-1/2 -translate-y-[calc(50%+2rem)] md:-translate-y-[calc(50%+4rem)] z-30 p-2 md:p-4 rounded-full bg-black/40 md:bg-black/20 backdrop-blur-md border border-white/10 hover:bg-white/10 transition-colors group"
+                className="absolute -right-2 md:right-8 top-1/2 -translate-y-[calc(50%+2.5rem)] md:-translate-y-[calc(50%+4rem)] z-30 p-2 md:p-4 rounded-full bg-black/40 md:bg-black/20 backdrop-blur-md border border-white/10 hover:bg-white/10 transition-colors group"
               >
                 <ChevronRight className="w-4 h-4 md:w-6 md:h-6 text-white/80 group-hover:text-white transition-colors" />
               </MagneticButton>
 
               <div className="relative w-full h-full flex items-center justify-center perspective-1000">
                 {[
-                  { id: "do78TF5cJl8", title: "Personal Brand Showreel" },
-                  { id: "5H2B1owjTg4", title: "Cinematic Showreel" },
-                  { id: "iMr7fRWRWLU", title: "Creative Showreel" },
+                  { id: "do78TF5cJl8", title: "Showreel I", description: "Personal brand and dynamic edits highlighting unique creator identities." },
+                  { id: "5H2B1owjTg4", title: "Showreel II", description: "A visually striking, cinematic compilation with immersive storytelling." },
+                  { id: "iMr7fRWRWLU", title: "Showreel III", description: "A dynamic and creative reel showcasing unique visual effects and transitions." },
                 ].map((video, i) => {
                   const isActive = activeShowreel === i;
                   const isLeft = (activeShowreel - 1 + 3) % 3 === i;
@@ -281,10 +288,10 @@ export default function App() {
                       }}
                       initial={false}
                       animate={{
-                        x: isActive ? "0%" : isLeft ? "-60%" : "60%",
+                        x: isActive ? "0%" : isLeft ? (isMobile ? "-100%" : "-60%") : (isMobile ? "100%" : "60%"),
                         scale: isActive ? 1 : 0.85,
                         zIndex: isActive ? 10 : 5,
-                        opacity: isActive ? 1 : 0.6,
+                        opacity: isActive ? 1 : (isMobile ? 0.3 : 0.6),
                       }}
                       transition={{ 
                         type: "spring",
@@ -292,10 +299,10 @@ export default function App() {
                         damping: 25,
                         mass: 1
                       }}
-                      className="absolute w-[85%] md:w-[65%] max-w-[800px] cursor-pointer"
+                      className="absolute w-[80%] sm:w-[70%] md:w-[65%] max-w-[800px] cursor-pointer"
                       onClick={() => setActiveShowreel(i)}
                     >
-                      <div className={`relative aspect-video rounded-2xl md:rounded-[2rem] overflow-hidden shadow-2xl transition-all duration-700 ${isActive ? 'ring-1 ring-white/20 shadow-[0_0_80px_rgba(255,255,255,0.1)]' : 'ring-1 ring-white/5 pointer-events-none'}`}>
+                      <div className={`relative aspect-[4/5] md:aspect-video rounded-2xl md:rounded-[2rem] overflow-hidden shadow-2xl transition-all duration-700 ${isActive ? 'ring-1 ring-white/20 shadow-[0_0_80px_rgba(255,255,255,0.1)]' : 'ring-1 ring-white/5 pointer-events-none'}`}>
                         <CustomYouTubeEmbed
                           videoId={video.id}
                           title={video.title}
@@ -324,6 +331,7 @@ export default function App() {
                             <p className="text-[10px] md:text-xs uppercase tracking-[0.3em] text-white/60">Now Playing</p>
                           </div>
                           <h3 className="font-serif text-2xl md:text-4xl text-white tracking-tight">{video.title}</h3>
+                          <p className="mt-2 text-xs md:text-sm text-white/60 leading-relaxed max-w-sm">{video.description}</p>
                         </div>
                         <div className="text-right hidden md:block">
                           <p className="text-5xl font-light text-white/10 font-mono">0{i + 1}</p>
@@ -346,7 +354,7 @@ export default function App() {
             <motion.div 
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: false, amount: 0.3 }}
+              viewport={{ once: isMobile, amount: 0.3 }}
               transition={{ duration: 0.6, ease: "easeOut" }}
               className="flex flex-col md:flex-row md:items-end justify-between mb-16 md:mb-24 gap-6 md:gap-8"
             >
@@ -370,7 +378,7 @@ export default function App() {
                   aria-label={`View details for ${project.title}`}
                   initial={{ opacity: 0, y: 80 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: false, amount: 0.2 }}
+                  viewport={{ once: isMobile, amount: 0.2 }}
                   transition={{ duration: 0.6, delay: (i % 3) * 0.1, ease: "easeOut" }}
                   className={`group relative ${project.colSpan} ${project.heightClass.replace('h-[400px]', 'h-[350px]').replace('lg:h-[460px]', 'lg:h-[400px]').replace('lg:h-[450px]', 'lg:h-[400px]')} rounded-[2rem] overflow-hidden cursor-pointer`}
                 >
@@ -385,7 +393,7 @@ export default function App() {
                       initial={{ scale: 1.3 }}
                       whileInView={{ scale: 1 }}
                       whileHover={{ scale: 1.05 }}
-                      viewport={{ once: false, amount: 0.2 }}
+                      viewport={{ once: isMobile, amount: 0.2 }}
                       transition={{ duration: 0.8, ease: "easeOut" }}
                       className="w-full h-full object-cover opacity-70 group-hover:opacity-40 transition-opacity duration-700 transform-gpu"
                     />
@@ -402,7 +410,7 @@ export default function App() {
                       <motion.div 
                         initial={{ opacity: 0, x: -40 }}
                         whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: false, margin: "-50px" }}
+                        viewport={{ once: isMobile, margin: "-50px" }}
                         transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" }}
                         className="flex items-center gap-4 mb-4"
                       >
@@ -411,7 +419,7 @@ export default function App() {
                       </motion.div>
                       
                       <div className="flex items-end justify-between">
-                        <h3 className={`font-serif tracking-tighter leading-none transform group-hover:-translate-y-2 text-white/90 group-hover:text-white transition-all duration-500 pt-0 mt-0 -mb-5 ${project.isLarge ? 'text-[30px] md:text-4xl lg:text-5xl' : 'text-[30px] md:text-3xl'}`}>
+                        <h3 className={`font-serif tracking-tighter leading-none transform md:group-hover:-translate-y-2 text-white/90 group-hover:text-white transition-all duration-500 pt-0 mt-0 -mb-5 ${project.isLarge ? 'text-[30px] md:text-4xl lg:text-5xl' : 'text-[30px] md:text-3xl'}`}>
                           {project.title}
                         </h3>
                         <div className="hidden md:flex items-center gap-3 text-xs uppercase tracking-widest text-white/0 group-hover:text-white transition-all duration-500 transform translate-y-4 group-hover:translate-y-0">
@@ -432,7 +440,7 @@ export default function App() {
             <motion.div 
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: false, amount: 0.3 }}
+              viewport={{ once: isMobile, amount: 0.3 }}
               transition={{ duration: 0.6, ease: "easeOut" }}
               className="flex flex-col md:flex-row gap-6 md:gap-12 items-start md:items-end mb-16 md:mb-24"
             >
@@ -449,7 +457,7 @@ export default function App() {
               <motion.div 
                 initial={{ opacity: 0, y: 60 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: false, amount: 0.3 }}
+                viewport={{ once: isMobile, amount: 0.3 }}
                 transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
                 whileHover={{ y: -5 }}
                 className="glass-panel rounded-[2rem] md:rounded-3xl p-6 md:p-10 group"
@@ -469,7 +477,7 @@ export default function App() {
               <motion.div 
                 initial={{ opacity: 0, y: 60 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: false, amount: 0.3 }}
+                viewport={{ once: isMobile, amount: 0.3 }}
                 transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
                 whileHover={{ y: -5 }}
                 className="glass-panel rounded-[2rem] md:rounded-3xl p-6 md:p-10 group"
@@ -495,7 +503,7 @@ export default function App() {
             <motion.div 
               initial={{ opacity: 0, scale: 0.85, y: 40 }}
               whileInView={{ opacity: 1, scale: 1, y: 0 }}
-              viewport={{ once: false, amount: 0.3 }}
+              viewport={{ once: isMobile, amount: 0.3 }}
               transition={{ duration: 0.6, ease: "easeOut" }}
               className="glass-panel rounded-[2rem] md:rounded-[3rem] p-6 md:p-16 relative overflow-hidden mx-0 md:mx-auto"
             >
@@ -562,7 +570,7 @@ export default function App() {
 
               <div className="flex flex-col gap-8">
                 {selectedProject.videos.map((videoId, idx) => (
-                  <div key={idx} className="relative aspect-video rounded-xl overflow-hidden bg-black/50 border border-white/10">
+                  <div key={idx} className="relative aspect-[4/5] md:aspect-video rounded-xl overflow-hidden bg-black/50 border border-white/10">
                     <CustomYouTubeEmbed
                       videoId={videoId}
                       title={`${selectedProject.title} Video ${idx + 1}`}
@@ -575,7 +583,6 @@ export default function App() {
           </motion.div>
         )}
       </AnimatePresence>
-      <SpeedInsights />
     </div>
   );
 }
