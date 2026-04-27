@@ -12,6 +12,7 @@ import MagneticButton from './components/MagneticButton';
 import ContactButtons from './components/ContactButtons';
 import Marquee from './components/Marquee';
 import { PROJECTS, Project } from './data';
+import portraitImg from './assets/portrait.webp';
 
 export default function App() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
@@ -204,7 +205,7 @@ export default function App() {
                 <div className="absolute inset-0 bg-gradient-to-tr from-black/60 via-transparent to-transparent z-10"></div>
                 <div className="absolute inset-0 border border-white/10 rounded-3xl md:rounded-[2rem] z-20 group-hover:border-white/20 transition-colors duration-500"></div>
                 <img 
-                  src="/portrait.webp" 
+                  src={portraitImg} 
                   alt="Portrait"
                   className="w-full h-full object-cover filter grayscale hover:grayscale-0 transition-all duration-700 scale-105 group-hover:scale-100 transform-gpu"
                   referrerPolicy="no-referrer"
