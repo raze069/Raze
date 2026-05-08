@@ -74,108 +74,117 @@ body {
 .liquid-blob {
   position: absolute;
   border-radius: 50%;
-  opacity: 0.6;
+  opacity: 0.4;
   z-index: 1;
-  will-change: transform;
+  /* Reduced painting work by removing will-change unless absolutely needed */
   transform: translateZ(0);
 }
 
 @media (max-width: 767px) {
   .liquid-blob {
-    animation-duration: 30s !important;
-    opacity: 0.5;
+    animation: none !important; /* Disable blob animation on mobile for battery and frames */
+    opacity: 0.3;
   }
 }
 
 @media (min-width: 768px) {
   .liquid-blob {
-    /* removed mix-blend-mode for performance, natural alpha blend is enough */
+    will-change: transform;
   }
 }
 
 .blob-1 {
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 60%);
   width: 100vw;
   height: 100vw;
   top: -20vw;
   left: -20vw;
-  animation: float-1 15s infinite ease-in-out;
+  animation: float-1 20s infinite linear; /* Linear is cheaper than ease-in-out for infinite */
 }
 
 .blob-2 {
-  background: radial-gradient(circle, rgba(148, 163, 184, 0.6) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(148, 163, 184, 0.4) 0%, transparent 60%);
   width: 90vw;
   height: 90vw;
   bottom: -20vw;
   right: -20vw;
-  animation: float-2 12s infinite ease-in-out;
+  animation: float-2 18s infinite linear;
 }
 
 .blob-3 {
-  background: radial-gradient(circle, rgba(71, 85, 105, 0.6) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(71, 85, 105, 0.4) 0%, transparent 60%);
   width: 80vw;
   height: 80vw;
   top: 30vh;
   left: 10vw;
-  animation: float-3 18s infinite ease-in-out;
+  animation: float-3 22s infinite linear;
 }
 
 @media (min-width: 768px) {
-  .blob-1 { width: 70vw; height: 70vw; top: -10vw; left: -10vw; animation-duration: 10s; }
-  .blob-2 { width: 60vw; height: 60vw; bottom: -10vw; right: -10vw; animation-duration: 8s; }
-  .blob-3 { width: 50vw; height: 50vw; top: 30vh; left: 10vw; animation-duration: 12s; }
+  .blob-1 { width: 70vw; height: 70vw; top: -10vw; left: -10vw; animation-duration: 20s; }
+  .blob-2 { width: 60vw; height: 60vw; bottom: -10vw; right: -10vw; animation-duration: 18s; }
+  .blob-3 { width: 50vw; height: 50vw; top: 30vh; left: 10vw; animation-duration: 22s; }
 }
 
 @keyframes float-1 {
-  0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
-  33% { transform: translate(15%, 10%) scale(1.1) rotate(15deg); }
-  66% { transform: translate(-10%, 20%) scale(0.9) rotate(-15deg); }
+  0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+  33% { transform: translate(5%, 5%) scale(1.05) rotate(10deg); }
+  66% { transform: translate(-5%, 10%) scale(0.95) rotate(-10deg); }
+  100% { transform: translate(0, 0) scale(1) rotate(0deg); }
 }
 
 @keyframes float-2 {
-  0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
-  33% { transform: translate(-15%, -15%) scale(1.2) rotate(-20deg); }
-  66% { transform: translate(10%, -10%) scale(0.8) rotate(20deg); }
+  0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+  33% { transform: translate(-5%, -5%) scale(1.05) rotate(-10deg); }
+  66% { transform: translate(5%, -5%) scale(0.95) rotate(10deg); }
+  100% { transform: translate(0, 0) scale(1) rotate(0deg); }
 }
 
 @keyframes float-3 {
-  0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
-  33% { transform: translate(20%, -20%) scale(0.9) rotate(25deg); }
-  66% { transform: translate(-15%, 15%) scale(1.1) rotate(-25deg); }
+  0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+  33% { transform: translate(10%, -10%) scale(0.95) rotate(15deg); }
+  66% { transform: translate(-10%, 10%) scale(1.05) rotate(-15deg); }
+  100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+}
+
+@keyframes marquee {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-50%, 0, 0); }
+}
+
+.animate-marquee {
+  animation: marquee 30s linear infinite;
 }
 
 /* Glass Morphism Utilities */
 .glass-panel {
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  background: rgba(255, 255, 255, 0.05); /* slightly increased opacity to compensate for lack of strong blur */
+  /* Remove backdrop-filter on mobile for huge performance win */
   border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 20px 40px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.05);
-  transform: translateZ(0);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05);
+  transform: translateZ(0); /* force into hardware layer */
 }
 
 @media (min-width: 768px) {
   .glass-panel {
     background: rgba(255, 255, 255, 0.02);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    box-shadow: 0 30px 60px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1);
+    backdrop-filter: blur(8px); /* reduced from 12px */
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1);
   }
 }
 
 .glass-button {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  background: rgba(255, 255, 255, 0.06);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+  transition: transform 0.2s ease, background-color 0.2s ease;
   transform: translateZ(0);
 }
 
 @media (min-width: 768px) {
   .glass-button {
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(4px); /* reduced from 8px */
+    -webkit-backdrop-filter: blur(4px);
   }
 }
 

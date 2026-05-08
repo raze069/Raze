@@ -38,7 +38,7 @@ export default function CustomYouTubeEmbed({ videoId, title = "YouTube video", c
           />
           <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-300" />
           <div className="absolute inset-0 flex items-center justify-center">
-            <div className="w-16 h-16 md:w-20 md:h-20 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center border border-white/20 group-hover:bg-white/20 group-hover:scale-110 transition-all duration-300 shadow-2xl">
+            <div className="w-16 h-16 md:w-20 md:h-20 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/20 group-hover:bg-white/20 group-hover:scale-110 transition-[transform,background-color] duration-300 shadow-2xl">
               <Play className="w-6 h-6 md:w-8 md:h-8 text-white ml-1.5" fill="currentColor" />
             </div>
           </div>

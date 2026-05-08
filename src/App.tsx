@@ -67,7 +67,7 @@ export default function App() {
         <div className="liquid-blob blob-1"></div>
         <div className="liquid-blob blob-2"></div>
         <div className="liquid-blob blob-3"></div>
-        <div className="absolute inset-0 opacity-[0.04] mix-blend-overlay pointer-events-none transform-gpu" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.5' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }}></div>
+        <div className="absolute inset-0 opacity-[0.02] md:opacity-[0.04] pointer-events-none transform-gpu" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.5' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }}></div>
       </div>
       
       <CustomCursor />
@@ -94,8 +94,8 @@ export default function App() {
         {/* Hero Section */}
         <section id="hero" className="min-h-screen relative flex items-center justify-center px-4 md:px-16 lg:px-24 pt-28 md:pt-32 pb-12 md:pb-20 overflow-hidden">
           {/* Background Elements */}
-          <div className="absolute inset-0 pointer-events-none z-0 flex items-center justify-center opacity-20">
-            <div className="w-[800px] h-[800px] bg-white/5 rounded-full blur-3xl"></div>
+          <div className="absolute inset-0 pointer-events-none z-0 flex items-center justify-center opacity-40">
+            <div className="w-[800px] h-[800px] rounded-full" style={{ background: 'radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 60%)', transform: 'translateZ(0)' }}></div>
           </div>
 
           {/* Corner Labels (Hero only) */}
@@ -200,13 +200,13 @@ export default function App() {
               transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
               className="lg:col-span-5 relative order-1 lg:order-2 flex justify-center lg:justify-end lg:-mt-8"
             >
-              <div className="relative w-full max-w-[450px] lg:max-w-none h-[350px] md:h-[450px] lg:h-[550px] rounded-3xl md:rounded-[2rem] overflow-hidden group">
+              <div className="relative w-full max-w-[450px] lg:max-w-none h-[350px] md:h-[450px] lg:h-[550px] rounded-3xl md:rounded-[2rem] overflow-hidden group transform transition-transform duration-500 hover:scale-[1.02] will-change-transform">
                 <div className="absolute inset-0 bg-gradient-to-tr from-black/60 via-transparent to-transparent z-10"></div>
-                <div className="absolute inset-0 border border-white/10 rounded-3xl md:rounded-[2rem] z-20 group-hover:border-white/20 transition-colors duration-500"></div>
+                <div className="absolute inset-0 border border-white/10 rounded-3xl md:rounded-[2rem] z-20 group-hover:border-white/20 transition-colors duration-500 pointer-events-none"></div>
                 <img 
                   src="https://i.imgur.com/iKnxbdC.jpeg" 
                   alt="Portrait"
-                  className="w-full h-full object-cover filter grayscale hover:grayscale-0 transition-all duration-700 scale-105 group-hover:scale-100 transform-gpu will-change-[filter,transform]"
+                  className="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-700 ease-out scale-100 group-hover:scale-105 transform-gpu"
                   referrerPolicy="no-referrer"
                   fetchPriority="high"
                   loading="eager"
@@ -224,7 +224,7 @@ export default function App() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 1, duration: 0.6 }}
-                  className="absolute top-4 right-4 md:top-6 md:right-6 z-30 bg-black/40 backdrop-blur-md rounded-full px-3 py-1.5 md:px-4 md:py-2 flex items-center gap-2.5 border border-white/10 shadow-xl"
+                  className="absolute top-4 right-4 md:top-6 md:right-6 z-30 bg-black/40 backdrop-blur-sm rounded-full px-3 py-1.5 md:px-4 md:py-2 flex items-center gap-2.5 border border-white/10 shadow-xl"
                 >
                   <div className="relative flex h-2 w-2">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
@@ -266,14 +266,14 @@ export default function App() {
               {/* Navigation Arrows */}
               <MagneticButton 
                 onClick={() => setActiveShowreel((prev) => (prev - 1 + 3) % 3)}
-                className="absolute -left-2 md:left-8 top-1/2 -translate-y-[calc(50%+2.5rem)] md:-translate-y-[calc(50%+4rem)] z-30 p-2 md:p-4 rounded-full bg-black/40 md:bg-black/20 backdrop-blur-md border border-white/10 hover:bg-white/10 transition-colors group"
+                className="absolute -left-2 md:left-8 top-1/2 -translate-y-[calc(50%+2.5rem)] md:-translate-y-[calc(50%+4rem)] z-30 p-2 md:p-4 rounded-full bg-black/60 md:bg-black/40 backdrop-blur-sm border border-white/10 hover:bg-white/20 transition-colors group"
               >
                 <ChevronLeft className="w-4 h-4 md:w-6 md:h-6 text-white/80 group-hover:text-white transition-colors" />
               </MagneticButton>
               
               <MagneticButton 
                 onClick={() => setActiveShowreel((prev) => (prev + 1) % 3)}
-                className="absolute -right-2 md:right-8 top-1/2 -translate-y-[calc(50%+2.5rem)] md:-translate-y-[calc(50%+4rem)] z-30 p-2 md:p-4 rounded-full bg-black/40 md:bg-black/20 backdrop-blur-md border border-white/10 hover:bg-white/10 transition-colors group"
+                className="absolute -right-2 md:right-8 top-1/2 -translate-y-[calc(50%+2.5rem)] md:-translate-y-[calc(50%+4rem)] z-30 p-2 md:p-4 rounded-full bg-black/60 md:bg-black/40 backdrop-blur-sm border border-white/10 hover:bg-white/20 transition-colors group"
               >
                 <ChevronRight className="w-4 h-4 md:w-6 md:h-6 text-white/80 group-hover:text-white transition-colors" />
               </MagneticButton>
@@ -316,7 +316,7 @@ export default function App() {
                       className="absolute w-[80%] sm:w-[70%] md:w-[65%] max-w-[800px] cursor-pointer"
                       onClick={() => setActiveShowreel(i)}
                     >
-                      <div className={`relative aspect-[4/5] md:aspect-video rounded-2xl md:rounded-[2rem] overflow-hidden shadow-2xl transition-all duration-700 ${isActive ? 'ring-1 ring-white/20 shadow-[0_0_80px_rgba(255,255,255,0.1)]' : 'ring-1 ring-white/5 pointer-events-none'}`}>
+                      <div className={`relative aspect-[4/5] md:aspect-video rounded-2xl md:rounded-[2rem] overflow-hidden shadow-2xl transition-[box-shadow,--tw-ring-color] duration-700 ${isActive ? 'ring-1 ring-white/20 shadow-[0_0_80px_rgba(255,255,255,0.1)]' : 'ring-1 ring-white/5 pointer-events-none'}`}>
                         <CustomYouTubeEmbed
                           videoId={video.id}
                           title={video.title}
@@ -414,7 +414,7 @@ export default function App() {
                           setActiveCategory(category);
                           if (isMobile) setIsFilterOpen(false);
                         }}
-                        className={`px-4 py-2 rounded-full text-xs uppercase tracking-widest transition-all whitespace-nowrap ${
+                        className={`px-4 py-2 rounded-full text-xs uppercase tracking-widest transition-colors whitespace-nowrap ${
                           activeCategory === category 
                             ? 'bg-white text-black' 
                             : 'bg-white/5 text-white/60 hover:bg-white/10 hover:text-white border border-white/10 hover:border-white/20'
@@ -442,22 +442,17 @@ export default function App() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.1 }}
                   transition={{ duration: 0.6, delay: isMobile ? 0 : (i % 3) * 0.1, ease: "easeOut" }}
-                  className={`group relative ${project.colSpan} ${project.heightClass} rounded-[2rem] overflow-hidden cursor-pointer`}
+                  className={`group relative ${project.colSpan} ${project.heightClass} rounded-[2rem] overflow-hidden cursor-pointer transform transition-transform duration-500 hover:scale-[1.02] will-change-transform`}
                 >
-                  {/* Image Container with Parallax Effect */}
+                  {/* Image Container */}
                   <div className="absolute inset-0 overflow-hidden">
-                    <motion.img 
+                    <img 
                       src={project.img} 
                       alt={project.title}
                       referrerPolicy="no-referrer"
                       loading="lazy"
                       decoding="async"
-                      initial={isMobile ? { scale: 1 } : { scale: 1.3 }}
-                      whileInView={{ scale: 1 }}
-                      whileHover={{ scale: 1.05 }}
-                      viewport={{ once: true, amount: 0.1 }}
-                      transition={{ duration: 0.8, ease: "easeOut" }}
-                      className="w-full h-full object-cover opacity-70 group-hover:opacity-40 transition-opacity duration-700 transform-gpu"
+                      className="w-full h-full object-cover opacity-70 group-hover:opacity-40 transition-all duration-700 ease-out scale-100 group-hover:scale-105 transform-gpu"
                     />
                   </div>
 
@@ -476,15 +471,15 @@ export default function App() {
                         transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" }}
                         className="flex items-center gap-4 mb-4"
                       >
-                        <div className="w-8 h-px bg-white/20 group-hover:bg-white/60 group-hover:w-12 transition-all duration-500"></div>
+                        <div className="w-8 h-px bg-white/20 group-hover:bg-white/60 group-hover:w-12 transition-[width,background-color] duration-500"></div>
                         <p className="text-[10px] md:text-xs uppercase tracking-[0.4em] text-white/60 group-hover:text-white transition-colors duration-500">{project.category}</p>
                       </motion.div>
                       
                       <div className="flex items-end justify-between">
-                        <h3 className={`font-serif tracking-tighter leading-none transform md:group-hover:-translate-y-2 text-white/90 group-hover:text-white transition-all duration-500 pt-0 mt-0 -mb-5 ${project.isLarge ? 'text-[30px] md:text-4xl lg:text-5xl' : 'text-[30px] md:text-3xl'}`}>
+                        <h3 className={`font-serif tracking-tighter leading-none transform origin-left md:group-hover:-translate-y-2 md:group-hover:scale-[1.03] text-white/90 group-hover:text-white transition-[color,transform] duration-500 pt-0 mt-0 -mb-5 ${project.isLarge ? 'text-[30px] md:text-4xl lg:text-5xl' : 'text-[30px] md:text-3xl'}`}>
                           {project.title}
                         </h3>
-                        <div className="hidden md:flex items-center gap-3 text-xs uppercase tracking-widest text-white/0 group-hover:text-white transition-all duration-500 transform translate-y-4 group-hover:translate-y-0">
+                        <div className="hidden md:flex items-center gap-3 text-xs uppercase tracking-widest text-white/0 group-hover:text-white transition-[color,transform] duration-500 transform translate-y-4 group-hover:translate-y-0">
                           Explore <ArrowRight className="w-4 h-4" />
                         </div>
                       </div>
@@ -570,7 +565,7 @@ export default function App() {
               transition={{ duration: 0.6, ease: "easeOut" }}
               className="glass-panel rounded-[2rem] md:rounded-[3rem] p-6 md:p-16 relative overflow-hidden mx-0 md:mx-auto"
             >
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-1/2 bg-white/5 blur-[100px] rounded-full pointer-events-none"></div>
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[150%] pointer-events-none" style={{ background: 'radial-gradient(ellipse at top, rgba(255,255,255,0.08) 0%, transparent 60%)', transform: 'translateZ(0)' }}></div>
               
               <h2 className="font-serif text-[40px] md:text-6xl tracking-tight mb-4 md:mb-6 relative z-10">
                 Let's create <br/><span className="italic text-white/60">something</span> iconic.
@@ -605,7 +600,7 @@ export default function App() {
             className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6"
           >
             <div 
-              className="absolute inset-0 bg-black/80 backdrop-blur-xl"
+              className="absolute inset-0 bg-black/90 backdrop-blur-sm"
               onClick={() => setSelectedProject(null)}
             ></div>
             
